@@ -1,65 +1,52 @@
-public abstract class Conta implements funcConta {
 
-    private static final int AGENCIA_PADRAO = 1;
-    private static int SEQUENCIAL = 1;
+public abstract class Conta implements FuncConta {
+	
+	private static final int AGENCIA_PADRAO = 1;
+	private static int SEQUENCIAL = 1;
 
-    protected int numAgencia;
-    protected int numConta;
-    protected double saldo;
+	protected int agencia;
+	protected int numero;
+	protected double saldo;
+	protected Cliente cliente;
 
-    
+	public Conta(Cliente cliente) {
+		this.agencia = Conta.AGENCIA_PADRAO;
+		this.numero = SEQUENCIAL++;
+		this.cliente = cliente;
+	}
 
-    public Conta(){
-        this.numAgencia = Conta.AGENCIA_PADRAO;
-        this.numConta = SEQUENCIAL++;
-    }
+	@Override
+	public void sacar(double valor) {
+		saldo -= valor;
+	}
 
-    @Override
-    public void sacar(double valor) {
-        // TODO Gerar a função de saque
-        saldo -= valor;
-    }
+	@Override
+	public void depositar(double valor) {
+		saldo += valor;
+	}
 
-    @Override
-    public void depositar(double valor) {
-        // TODO Gerar a função de deposito
-        saldo += valor;
-    }
+	@Override
+	public void transferir(double valor, FuncConta contaDestino) {
+		this.sacar(valor);
+		contaDestino.depositar(valor);
+	}
 
-    @Override
-    public void transferir(double valor, Conta contaDestino) {
-        // TODO Gerar a função de transferencia
-        this.sacar(valor);
-        contaDestino.depositar(valor);
-    }
+	public int getAgencia() {
+		return agencia;
+	}
 
-    public double getSaldo() {
-        return saldo;
-    }
+	public int getNumero() {
+		return numero;
+	}
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
+	public double getSaldo() {
+		return saldo;
+	}
 
-    public int getnumConta() {
-        return numConta;
-    }
-
-    public void setnumConta(int numConta) {
-        this.numConta = numConta;
-    }
-
-    public int getNumAgencia() {
-        return numAgencia;
-    }
-
-    public void setNumAgencia(int numAgencia) {
-        this.numAgencia = numAgencia;
-    }
-
-    protected void imprimirInfos() {
-        System.out.println(String.format("Agencia: %d", this.numAgencia));
-        System.out.println(String.format("Conta: %d", this.numConta));
-        System.out.println(String.format("saldo: %.2f", this.saldo));
-    }
+	protected void imprimirInfosComuns() {
+		System.out.println(String.format("Titular: %s", this.cliente.getNome()));
+		System.out.println(String.format("Agencia: %d", this.agencia));
+		System.out.println(String.format("Numero: %d", this.numero));
+		System.out.println(String.format("Saldo: %.2f", this.saldo));
+	}
 }

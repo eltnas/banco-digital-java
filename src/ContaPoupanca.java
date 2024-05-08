@@ -1,10 +1,12 @@
 public class ContaPoupanca extends Conta {
 
-    @Override
-    public void imprimirExtrato(){
-        System.out.println("========== Extrato conta Poupanca ==========");
-        super.imprimirInfos();
-        System.out.println("\n\n");
-        
-    }
+	public ContaPoupanca(Cliente cliente) {
+		super(cliente);
+	}
+
+	@Override
+	public void imprimirExtrato() {
+		System.out.println("=== Extrato Conta Poupança ===");
+		super.imprimirInfosComuns();
+	}
 }
